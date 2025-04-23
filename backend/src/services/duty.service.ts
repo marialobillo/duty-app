@@ -1,5 +1,5 @@
 import pool from '../db/database';
-import { Duty } from '../models/duty.model';
+import { Duty, DutyCreate } from '../models/duty.model';
 
 export const getAllDuties = async (): Promise<Duty[]> => {
   const query = 'SELECT * FROM duties ORDER BY created_at DESC';
@@ -7,7 +7,7 @@ export const getAllDuties = async (): Promise<Duty[]> => {
   return result.rows as Duty[]
 }
 
-export const createDuty = async (duty: CreateDuty): Promise<Duty> => {
+export const createDuty = async (duty: DutyCreate): Promise<Duty> => {
   const { title, description, completed } = duty;
 
   const query = `
