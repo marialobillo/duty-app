@@ -14,7 +14,8 @@
     "dev": "nodemon src/server.ts",
     "start": "ts-node src/server.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "migrate": "ts-node src/db/migrate.ts"
   },
   "dependencies": {
     "bunyan": "^1.8.15",
