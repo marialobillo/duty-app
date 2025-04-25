@@ -10,3 +10,10 @@ export interface DutyCreate {
   description?: string;
   completed?: boolean;
 }
+
+export interface DutyUpdate {
+  id: number;
+  title?: string;
+  description?: string;
+  completed?: boolean;
+}
