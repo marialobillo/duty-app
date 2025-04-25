@@ -8,7 +8,11 @@ export const getAllDuties = async (): Promise<Duty[]> => {
 }
 
 export const createDuty = async (duty: DutyCreate): Promise<Duty> => {
-  const { title, description, completed } = duty;
+  let { title, description, completed } = duty;
+
+  if (completed === undefined) {
+    completed = false;
+  }
 
   const query = `
     INSERT INTO duties (title, description, completed)
