@@ -16,6 +16,11 @@ app.get('/', (req, res) => {
   console.log('******* ====> API is running...');
   res.send('API is running...');
 });
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 app.use('/api/v1/duties', dutyRoutes);
 
 
