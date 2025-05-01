@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Duty App API
+  description: API for managing duties in the Duty App.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:4000/api/v1
+    description: Local development server
+
+paths:
+  /duties:
+    get:
+      summary: Retrieve all duties
+      responses:
+        '200':
+          description: A list of duties
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Duty'
+        '500':
+          description: Internal server error
+
+    post:
+      summary: Create a new duty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DutyInput'
+      responses:
+        '201':
+          description: Duty created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Duty'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+  /duties/{id}:
+    get:
+      summary: Get a duty by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Duty found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Duty'
+        '404':
+          description: Duty not found
+        '500':
+          description: Internal server error
+
+    put:
+      summary: Update a duty by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DutyInput'
+      responses:
+        '200':
+          description: Duty updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Duty'
+        '400':
+          description: Invalid input
+        '404':
+          description: Duty not found
+        '500':
+          description: Internal server error
+
+    delete:
+      summary: Delete a duty by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Duty deleted successfully
+        '404':
+          description: Duty not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    Duty:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '123e4567-e89b-12d3-a456-426614174000'
+        title:
+          type: string
+          example: 'Buy groceries'
+        description:
+          type: string
+          example: 'Milk, eggs, and bread'
+        completed:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          example: '2025-04-29T14:30:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2025-04-25T09:04:35.871Z'
+
+    DutyInput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Buy groceries'
+        description:
+          type: string
+          example: 'Milk, eggs, and bread'
+        completed:
+          type: boolean
+          example: false
+      required:
+        - title
+        - description

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getAllDuties, createDuty, updateDuty, deleteDuty } from '../services/duty.service';
 import Joi from 'joi';
 import { Duty, DutyCreate } from '../models/duty.model';
+import logger from './../config/logger';
 
 const dutySchema = Joi.object({
   title: Joi.string().required(),
@@ -14,7 +15,7 @@ export const getDuties = async (req: Request, res: Response): Promise<void> => {
     const duties: Duty[] = await getAllDuties();
     res.status(200).json(duties);
   } catch (error) {
-    console.error('Error fetching duties:', error);
+    logger.error('Error fetching duties:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
@@ -29,7 +30,7 @@ export const createNewDuty = async (req: Request, res: Response): Promise<void> 
     const newDuty: DutyCreate = await createDuty(value);
     res.status(201).json(newDuty);
   } catch (error) {
-    console.log('Error creating duty:', error);
+    logger.info('Error creating duty:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
@@ -49,7 +50,7 @@ export const updateDutyById = async (req: Request, res: Response): Promise<void>
     }
     res.status(200).json(updatedDuty);
   } catch (error) {
-    console.log('Error updating duty:', error);
+    logger.error('Error updating duty:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
@@ -71,7 +72,7 @@ export const deleteDutyById = async (req: Request, res: Response): Promise<void>
 
     res.status(204).send();
   } catch (error) {
-    console.error('Error deleting duty:', error);
+    logger.error('Error deleting duty:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
